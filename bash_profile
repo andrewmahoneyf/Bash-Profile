@@ -24,7 +24,7 @@ export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/.composer/vendor/bin
 export PATH=$PATH:./node_modules/.bin
 
-# nvm
+# Node Version Manager
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
@@ -168,6 +168,9 @@ sharefolder() {
 #---------------------------------------------------------------------------------------------------------------------------------------
 
 # Misc Commands
+alias network-ip='ipconfig getifaddr en0'                                       # Get Your Network IP Address
+alias public-ip='curl ipecho.net/plain; echo'                                   # Get Your External IP Address
+alias bash_profile='code ~/.bash_profile'                                       # Open bash_profile in VSCode
 alias re-source='source ~/.bash_profile'                                        # Source bash_profile
 bash-as() { sudo -u $1 /bin/bash; }                                             # Run a bash shell as another user
 alias ll='ls -alh'                                                              # List files
@@ -191,8 +194,8 @@ alias ...='cd ../../'
 alias ....='cd ../../../'
 alias home='clear && cd ~ && ll'                                                # Home directory
 alias downloads='clear && cd ~/Downloads && ls'                                 # Downloads directory
-alias desktop='clear && cd ~/Desktop && ls'                                 # Desktop directory
-cs() { cd "$@" && ls; }                                                        # Enter directory and list contents with ls
+alias desktop='clear && cd ~/Desktop && ls'                                     # Desktop directory
+cs() { cd "$@" && ls; }                                                         # Enter directory and list contents with ls
 
 # Terminal auto completion
 eval $(thefuck --alias)
@@ -211,7 +214,7 @@ alias recycle="sudo rm -rf node_modules/ && yarn"
 weather() {
     location="$1"
     if [ -z "$location" ]; then
-        location="~Los+Angeles"
+        location="Los+Angeles"
     fi
 
     curl http://wttr.in/$location?lang=en
@@ -267,6 +270,8 @@ gitreset() {
 #   6.  OS X COMMANDS
 #---------------------------------------------------------------------------------------------------------------------------------------
 
+alias shutdown='sudo shutdown -h now'                                                                                             # Shut down Mac immediately
+alias restart='sudo shutdown -r now'                                                                                              # Restart Mac immediately
 alias add-dock-spacer='defaults write com.apple.dock persistent-apps -array-add "{'tile-type'='spacer-tile';}" && killall Dock'   # Add a spacer to the dock
 alias show-hidden-files='defaults write com.apple.finder AppleShowAllFiles 1 && killall Finder'                                   # Show hidden files in Finder
 alias hide-hidden-files='defaults write com.apple.finder AppleShowAllFiles 0 && killall Finder'                                   # Hide hidden files in Finder
@@ -313,7 +318,7 @@ alias dz-kill='docker-compose down'
 
 # Playpants
 alias pp-test='make -f Makefile.rpmvenv run-dev-platform-api.tests.playpants'
-alias pp-reset='docker exec devzone_app_1 service celeryd restart'
+alias pp-build='docker exec -it devzone_app_1 /bin/bash -c "python ./devzone/manage.py dumpdata playpants.ProjectSettingGroup --indent 4 > ./devzone/playpants/fixtures/initial_project_settings.json"'
 
 # Activity Launcher / LSG/MMP / Redis / Ab Testing / Achievement Engine
 alias dz-al='make run-activity-launcher'
@@ -329,12 +334,10 @@ alias dz-run-all='dz-run && dz-al && dz-lsg && dz-ab && dz-ae'
 
 # Utils
 alias dz-help='make all'
-alias dz-lint='make -f Makefile.rpmvenv py-lint'
-alias dz-snapshots="make test-update-snapshots"
-alias dz-log='make -f Makefile.devenv devzone-dev-logs CONTAINERS="devzone"'
-alias dz-mm='docker exec docker_devzone_1 python2.7 manage.py makemigrations'
-alias dz-migrate="docker exec docker_devzone_1 python2.7 manage.py migrate"
 alias dz-shell='make docker-shell'
-alias docker-reset='docker exec docker_devzone_1 service httpd restart'
-alias docker-prune='docker system prune -f'
-alias docker-req='docker exec -it docker_devzone_1 /bin/bash -c "source /usr/share/venvs/devzone/bin/activate && pip install -r rpm/requirements.txt && service httpd restart"'
+alias dz-lint='make -f Makefile.rpmvenv py-lint'
+alias dz-log='docker logs -f devzone_app_1'
+alias dz-mm='docker exec devzone_app_1 python ./devzone/manage.py makemigrations'
+alias dz-migrate='docker exec devzone_app_1 python ./devzone/manage.py migrate'
+alias dz-req='docker exec -it devzone_app_1 /bin/bash -c "source /usr/share/venvs/devzone/bin/activate && pip install -r rpm/requirements.txt && service httpd restart"'
+alias docker-prune='docker system prune --volumes -f'
