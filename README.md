@@ -17,9 +17,7 @@
 - [jEnv](https://github.com/jenv/jenv) - Java environment manager
 - [Dracula Theme](https://draculatheme.com/terminal/) - Dark and beautiful theme capatible with bash
 - [colorls](https://github.com/athityakumar/colorls) - Add color and icons to ls
-- [zsh-completions](https://github.com/zsh-users/zsh-completions) - Tab completion definitions for Zsh
-- [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) - Syntax highlighting for shell commands
-- [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) - Autosuggestions while typing
+- [zsh-users](https://github.com/zsh-users) - Collection of powerfull Zsh plugins such as autosuggestions, syntax-highlighting, and completions
 - [thefuck](https://github.com/nvbn/thefuck) - Console command error corrector
 - [cointop](https://github.com/miguelmota/cointop) - Interactive terminal based UI application for tracking cryptocurrencies
 - [dockly](https://github.com/lirantal/dockly) - Docker console UI Dashboard for quickly managing and inspecting Containers

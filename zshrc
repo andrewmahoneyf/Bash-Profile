@@ -429,12 +429,17 @@ if type brew &>/dev/null; then
 
     # Load Zsh syntax highlighting plugin
     source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+    # Load Zsh history substring search plugin (Note: need to load after syntax-highlighting)
+    source "$(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh"
     # Load Zsh autosuggestions plugin
     source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
 fi
 
 # Keybindings
-bindkey -e
+bindkey -e                                   # Use Emacs keybindings https://quickref.me/emacs.html
+bindkey '^[[A' history-substring-search-up   # Up arrow for history substring search
+bindkey '^[[B' history-substring-search-down # Down arrow for history substring search
+bindkey '^ ' autosuggest-accept              # Accept autosuggestion with ctrl + space
 
 # History
 HISTSIZE=5000
