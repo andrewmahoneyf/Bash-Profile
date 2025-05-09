@@ -2,9 +2,6 @@
 #   1. CORE ENVIRONMENT SETTINGS
 #---------------------------------------------------------------------------------------------------------------------------------------
 
-# Ignore ZSH shell update notification
-export BASH_SILENCE_DEPRECATION_WARNING=1
-
 # Default editor
 export EDITOR="nano"
 
@@ -21,14 +18,17 @@ export JOBS=max
 # Helper to safely prepend to PATH
 add_to_path() {
   case ":$PATH:" in
-    *":$1:"*) ;;  # already in PATH
-    *) PATH="$1:$PATH" ;;
+  *":$1:"*) ;; # already in PATH
+  *) PATH="$1:$PATH" ;;
   esac
 }
 
+# Set Homebrew prefix for convenience
+export BREW="/opt/homebrew" # brew --prefix
+
 # Core paths
-add_to_path "/usr/local/bin"
-add_to_path "/usr/local/sbin"
+add_to_path "$BREW/bin"
+add_to_path "$BREW/sbin"
 add_to_path "$HOME/bin"
 
 #---------------------------------------------------------------------------------------------------------------------------------------
@@ -43,44 +43,41 @@ add_to_path "$BUN_INSTALL/bin"
 add_to_path "$HOME/.composer/vendor/bin"
 
 # Go (Golang)
+add_to_path "$BREW/opt/go/libexec/bin"
 export GOPATH="$HOME/go"
 export GOBIN="$GOPATH/bin"
 add_to_path "$GOBIN"
 
-# jEnv (Java environment manager)
-add_to_path "$HOME/.jenv/bin"
+# jEnv (Java environment manager - now using Homebrew)
+add_to_path "$BREW/opt/jenv/bin"
 eval "$(jenv init -)"
-export JAVA_HOME="$HOME/.jenv/versions/`jenv version-name`"
-alias jenv_set_java_home='export JAVA_HOME="$HOME/.jenv/versions/`jenv version-name`"'
 
 # Local node modules binaries
-if [ -f "./package.json" ] && [ -d "./node_modules/.bin" ]; then
-  add_to_path "./node_modules/.bin"
-fi
+add_to_path "./node_modules/.bin"
 
 # NVM (Node Version Manager)
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+[ -s "$BREW/opt/nvm/nvm.sh" ] && \. "$BREW/opt/nvm/nvm.sh"
+[ -s "$BREW/opt/nvm/etc/bash_completion.d/nvm" ] && \. "$BREW/opt/nvm/etc/bash_completion.d/nvm"
 
 # pnpm (Node package manager)
 export PNPM_HOME="$HOME/Library/pnpm"
 add_to_path "$PNPM_HOME"
 
 # Python
-add_to_path "$(brew --prefix)/opt/python/libexec/bin"
+add_to_path "$BREW/opt/python/libexec/bin"
 
 # Ruby
-add_to_path "/usr/local/opt/ruby/bin"
-export LDFLAGS="-L/usr/local/opt/ruby/lib"
-export CPPFLAGS="-I/usr/local/opt/ruby/include"
-export PKG_CONFIG_PATH="/usr/local/opt/ruby/lib/pkgconfig"
+add_to_path "$BREW/opt/ruby/bin"
+export LDFLAGS="-L$BREW/opt/ruby/lib"
+export CPPFLAGS="-I$BREW/opt/ruby/include"
+export PKG_CONFIG_PATH="$BREW/opt/ruby/lib/pkgconfig"
 
 # SQLite (SQL/Database)
-add_to_path "/usr/local/opt/sqlite/bin"
-export LDFLAGS="$LDFLAGS -L/usr/local/opt/sqlite/lib"
-export CPPFLAGS="$CPPFLAGS -I/usr/local/opt/sqlite/include"
-export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:/usr/local/opt/sqlite/lib/pkgconfig"
+add_to_path "$BREW/opt/sqlite/bin"
+export LDFLAGS="$LDFLAGS -L$BREW/opt/sqlite/lib"
+export CPPFLAGS="$CPPFLAGS -I$BREW/opt/sqlite/include"
+export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$BREW/opt/sqlite/lib/pkgconfig"
 
 #---------------------------------------------------------------------------------------------------------------------------------------
 #   4. MOBILE DEVELOPMENT
@@ -120,12 +117,4 @@ add_to_path "$HOME/.codeium/windsurf/bin"
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # Homebrew path (should come after everything else)
-eval "$(/opt/homebrew/bin/brew shellenv)"
-
-#---------------------------------------------------------------------------------------------------------------------------------------
-# 7. BASHRC (Interactive Shell Configuration)
-#---------------------------------------------------------------------------------------------------------------------------------------
-
-if [ -f ~/.bashrc ]; then
-   source ~/.bashrc
-fi
+eval "$($BREW/bin/brew shellenv)"
