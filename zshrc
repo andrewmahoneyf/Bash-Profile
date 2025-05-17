@@ -3,7 +3,10 @@
 #---------------------------------------------------------------------------------------------------------------------------------------
 
 # Set initial folder directory to Development
-[[ -z "$SSH_TTY" ]] && cd ~/Development
+# Only cd if running an interactive shell, not in SSH, and not launched by a code editor
+if [[ -z "$SSH_TTY" && -z "$VSCODE_PID" && -z "$TERM_PROGRAM" || "$TERM_PROGRAM" != "vscode" ]]; then
+    cd ~/Development
+fi
 
 # Define Color Map
 typeset -A COLORS=(
@@ -165,9 +168,9 @@ alias lslx='lsl -X'                        # Long list all by extension
 #---------------------------------------------------------------------------------------------------------------------------------------
 
 # Homebrew
-alias brewclean='brew autoremove && brew cleanup --scrub --prune=all'
-alias brewup='brew update && brew upgrade && brewclean'
+alias brewclean='brew autoremove && brew cleanup --prune=all --scrub'
 alias brewdr='brew doctor'
+alias brewup='brew update && brew upgrade && brewclean && brewdr'
 alias brewout='brew outdated'
 alias brewls='brew list'
 alias brewsr='brew search'
@@ -440,6 +443,7 @@ bindkey -e                                   # Use Emacs keybindings https://qui
 bindkey '^[[A' history-substring-search-up   # Up arrow for history substring search
 bindkey '^[[B' history-substring-search-down # Down arrow for history substring search
 bindkey '^ ' autosuggest-accept              # Accept autosuggestion with ctrl + space
+bindkey '^[ ' autosuggest-accept             # Accept autosuggestion with alt + space
 
 # History
 HISTSIZE=5000
@@ -465,7 +469,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 # Optional: colorls flags tab completion
 if type colorls &>/dev/null; then
-    COLORLS_COMPLETION="$(dirname "$(gem which colorls)")/tab_complete.sh"
+    COLORLS_COMPLETION="$(dirname "$(which colorls)")/tab_complete.sh"
     [[ -f "$COLORLS_COMPLETION" ]] && source "$COLORLS_COMPLETION"
 fi
 

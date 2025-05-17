@@ -35,20 +35,13 @@ add_to_path "$HOME/bin"
 #   3. DEVELOPER TOOLING (Languages, Runtimes, Version/Package Managers)
 #---------------------------------------------------------------------------------------------------------------------------------------
 
-# Bun (JavaScript runtime)
-export BUN_INSTALL="$HOME/.bun"
-add_to_path "$BUN_INSTALL/bin"
-
-# Composer (PHP dependency manager)
-add_to_path "$HOME/.composer/vendor/bin"
-
 # Go (Golang)
 add_to_path "$BREW/opt/go/libexec/bin"
 export GOPATH="$HOME/go"
 export GOBIN="$GOPATH/bin"
 add_to_path "$GOBIN"
 
-# jEnv (Java environment manager - now using Homebrew)
+# jEnv (Java environment manager)
 add_to_path "$BREW/opt/jenv/bin"
 eval "$(jenv init -)"
 
@@ -64,20 +57,11 @@ export NVM_DIR="$HOME/.nvm"
 export PNPM_HOME="$HOME/Library/pnpm"
 add_to_path "$PNPM_HOME"
 
-# Python
-add_to_path "$BREW/opt/python/libexec/bin"
-
 # Ruby
 add_to_path "$BREW/opt/ruby/bin"
-export LDFLAGS="-L$BREW/opt/ruby/lib"
-export CPPFLAGS="-I$BREW/opt/ruby/include"
-export PKG_CONFIG_PATH="$BREW/opt/ruby/lib/pkgconfig"
-
-# SQLite (SQL/Database)
-add_to_path "$BREW/opt/sqlite/bin"
-export LDFLAGS="$LDFLAGS -L$BREW/opt/sqlite/lib"
-export CPPFLAGS="$CPPFLAGS -I$BREW/opt/sqlite/include"
-export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:$BREW/opt/sqlite/lib/pkgconfig"
+# export LDFLAGS="-L$BREW/opt/ruby/lib"
+# export CPPFLAGS="-I$BREW/opt/ruby/include"
+# export PKG_CONFIG_PATH="$BREW/opt/ruby/lib/pkgconfig"
 
 #---------------------------------------------------------------------------------------------------------------------------------------
 #   4. MOBILE DEVELOPMENT
@@ -112,9 +96,6 @@ add_to_path "$HOME/.codeium/windsurf/bin"
 #---------------------------------------------------------------------------------------------------------------------------------------
 #   6. SYSTEM UTILS & PACKAGE MANAGERS
 #---------------------------------------------------------------------------------------------------------------------------------------
-
-# Set Homebrew Cask application directory
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # Homebrew path (should come after everything else)
 eval "$($BREW/bin/brew shellenv)"
